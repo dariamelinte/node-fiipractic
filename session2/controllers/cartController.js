@@ -152,8 +152,39 @@ const updateCart = async (req, res) => {
   }
 }
 
-const deleteCart = (req, res) => {
+const deleteCart = async (req, res) => {
+  try {
+    const { cartId } = req.params;
 
+    const {
+      mongo: { ObjectId }
+    } = require("mongoose");
+
+    const cart = await req.db.Cart.findOne({
+      _id: ObjectId(cartId)
+    });
+
+    if (!cart) {
+      return res.status(httpStatusCode.NOT_FOUND).json({
+        success: false,
+        message: "The cart could not be found!"
+      });
+    }
+
+    await req.db.Cart.deleteOne({
+      _id: ObjectId(cartId)
+    });
+
+    return res.status(httpStatusCode.NO_CONTENT).json({
+      success: true
+    });
+  } catch (error) {
+    console.error('err', error);
+    return res.status(httpStatusCode.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Something bad happened!"
+    });
+  }
 }
 
 module.exports = {
