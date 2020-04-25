@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "email@google.com",
+      "password": "password",
+      "firstName": "daria",
+      "lastName": "daria"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "New post",
+      "description": "ausygd",
+      "userId": 1
+    }
+  ]
+}
